@@ -1,0 +1,141 @@
+{
+  "name": "Knowledge Graph Studio Dev Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  
+  // Use the docker-compose service as the dev container
+  "shutdownAction": "stopCompose",
+  
+  // Features to add to the dev container
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/dhoeric/features/google-cloud-cli:1": {}
+  },
+  
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Core development
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        
+        // TypeScript/JavaScript
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "dsznajder.es7-react-js-snippets",
+        
+        // Graph visualization
+        "joaompinto.vscode-graphviz",
+        
+        // Database
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "cweijan.vscode-database-client2",
+        
+        // Docker & DevOps
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        
+        // Testing
+        "orta.vscode-jest",
+        "ms-playwright.playwright",
+        
+        // Documentation
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        
+        // Version control (for jj support)
+        "mhutchie.git-graph",
+        
+        // AI assistance
+        "github.copilot",
+        "github.copilot-chat",
+        
+        // Utilities
+        "streetsidesoftware.code-spell-checker",
+        "wayou.vscode-todo-highlight",
+        "gruntfuggly.todo-tree",
+        "redhat.vscode-yaml",
+        "ms-vscode.live-server"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        },
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/.pytest_cache": true,
+          "**/node_modules": true
+        },
+        "todo-tree.tree.showScanModeButton": true
+      }
+    }
+  },
+  
+  // Port forwarding
+  "forwardPorts": [
+    3000,  // Frontend dev server
+    5000,  // Backend API
+    7474,  // Neo4j browser
+    7687,  // Neo4j bolt
+    5432,  // PostgreSQL
+    6379,  // Redis
+    8080,  // Alternative web server
+    9229   // Node.js debugger
+  ],
+  
+  // Use 'postCreateCommand' to run commands after the container is created
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  
+  // Use 'postStartCommand' to run commands after the container starts
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+  
+  // Environment variables
+  "containerEnv": {
+    "WORKSPACE_FOLDER": "/workspace",
+    "NODE_ENV": "development",
+    "PYTHONPATH": "/workspace/src"
+  },
+  
+  // Mount points
+  "mounts": [
+    "source=${localWorkspaceFolder}/.devcontainer/scripts,target=/scripts,type=bind",
+    "source=knowledge-graph-data,target=/data,type=volume"
+  ],
+  
+  // Run as non-root user
+  "remoteUser": "vscode"
+}

@@ -1,0 +1,88 @@
+{
+  "name": "knowledge-graph-studio",
+  "version": "0.1.0",
+  "description": "A highly customizable, interactive knowledge graph management platform",
+  "private": true,
+  "author": "Knowledge Graph Studio Team",
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/knowledge-graph-studio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/knowledge-graph-studio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/knowledge-graph-studio/issues"
+  },
+  "keywords": [
+    "knowledge-graph",
+    "graph-visualization",
+    "web-extraction",
+    "bookmarks",
+    "semantic-web",
+    "data-management"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "dev": "concurrently \"pnpm:dev:*\"",
+    "dev:frontend": "cd frontend && pnpm dev",
+    "dev:backend": "cd backend && pnpm dev",
+    "dev:extraction": "cd services/extraction && pnpm dev",
+    "build": "pnpm run build:frontend && pnpm run build:backend",
+    "build:frontend": "cd frontend && pnpm build",
+    "build:backend": "cd backend && pnpm build",
+    "test": "pnpm run test:frontend && pnpm run test:backend",
+    "test:frontend": "cd frontend && pnpm test",
+    "test:backend": "cd backend && pnpm test",
+    "test:e2e": "playwright test",
+    "lint": "pnpm run lint:frontend && pnpm run lint:backend",
+    "lint:frontend": "cd frontend && pnpm lint",
+    "lint:backend": "cd backend && pnpm lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "typecheck": "pnpm run typecheck:frontend && pnpm run typecheck:backend",
+    "typecheck:frontend": "cd frontend && pnpm typecheck",
+    "typecheck:backend": "cd backend && pnpm typecheck",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "db:migrate": "cd backend && pnpm db:migrate",
+    "db:seed": "cd backend && pnpm db:seed",
+    "db:reset": "cd backend && pnpm db:reset",
+    "jj:commit": "jj describe -m",
+    "jj:push": "jj git push",
+    "jj:sync": "jj git fetch && jj rebase -d main",
+    "prepare": "husky install",
+    "postinstall": "pnpm run prepare"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "workspaces": [
+    "frontend",
+    "backend",
+    "services/*",
+    "packages/*",
+    "plugins/*"
+  ]
+}
