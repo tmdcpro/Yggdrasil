@@ -1,4 +1,4 @@
-# Knowledge Graph Studio 🧠🕸️
+# Knowledge Graph Studio (A subgraph of "Yggdrasil; The World Tree Project")  🧠🕸️
 
 > A highly customizable, interactive knowledge graph management platform that eliminates boundaries between users and developers
 
@@ -210,5 +210,6 @@ This project is in active development. Features and APIs may change.
 ---
 
 Built with ❤️ by the Knowledge Graph Studio Team
+
 
 *Making knowledge management accessible to everyone*
