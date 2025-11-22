@@ -1,0 +1,146 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "_comment": "Master Devbox configuration for Yggdrasil project. Each experiment can override these settings.",
+  "packages": [
+    "python@3.11",
+    "nodejs@20",
+    "git@latest",
+    "jq@latest",
+    "curl@latest"
+  ],
+  "env": {
+    "PROJECT_NAME": "Yggdrasil",
+    "GITHUB_REPO": "https://github.com/tmdcpro/Yggdrasil",
+    "EXPERIMENTS_DIR": "../yggdrasil-experiments"
+  },
+  "shell": {
+    "init_hook": [
+      "echo '🌳 Welcome to Yggdrasil Development Environment!'",
+      "echo '================================================'",
+      "echo ''",
+      "echo '📊 Available Worktrees:'",
+      "git worktree list",
+      "echo ''",
+      "echo '🔧 Commands:'",
+      "echo '  devbox run list-experiments  - List all experiments'",
+      "echo '  devbox run switch <exp>      - Switch to an experiment'",
+      "echo '  devbox run compare           - Compare experiments'",
+      "echo '  devbox run sync              - Sync with GitHub'",
+      "echo ''"
+    ],
+    "scripts": {
+      "list-experiments": [
+        "echo '🔬 Yggdrasil Experiments:'",
+        "echo ''",
+        "echo '1. Alpha (exp/alpha)'",
+        "echo '   Location: ../yggdrasil-experiments/alpha'",
+        "echo '   Status: Python prototype'",
+        "echo ''",
+        "echo '2. Knowledge Graph (exp/knowledge-graph)'",
+        "echo '   Location: ../yggdrasil-experiments/knowledge-graph'",
+        "echo '   Status: Full-stack platform'",
+        "echo ''",
+        "echo '3. Perplexity Build (exp/perplexity-build)'",
+        "echo '   Location: ../yggdrasil-experiments/perplexity-build'",
+        "echo '   Status: AI-enhanced version'",
+        "echo ''",
+        "git worktree list"
+      ],
+      
+      "switch": [
+        "if [ -z \"$1\" ]; then",
+        "  echo 'Usage: devbox run switch <experiment-name>'",
+        "  echo 'Available: alpha, knowledge-graph, perplexity-build'",
+        "  exit 1",
+        "fi",
+        "case $1 in",
+        "  alpha)",
+        "    cd ../yggdrasil-experiments/alpha",
+        "    echo 'Switched to Alpha experiment'",
+        "    ;;",
+        "  knowledge-graph)",
+        "    cd ../yggdrasil-experiments/knowledge-graph",
+        "    echo 'Switched to Knowledge Graph experiment'",
+        "    ;;",
+        "  perplexity-build)",
+        "    cd ../yggdrasil-experiments/perplexity-build",
+        "    echo 'Switched to Perplexity Build experiment'",
+        "    ;;",
+        "  *)",
+        "    echo 'Unknown experiment: $1'",
+        "    exit 1",
+        "    ;;",
+        "esac"
+      ],
+      
+      "compare": [
+        "echo '📊 Comparing Experiments:'",
+        "echo ''",
+        "echo 'Checking code statistics...'",
+        "echo ''",
+        "for dir in ../yggdrasil-experiments/*; do",
+        "  if [ -d \"$dir\" ]; then",
+        "    echo \"$(basename $dir):\"",
+        "    echo \"  Files: $(find $dir -type f -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.jsx' -o -name '*.tsx' 2>/dev/null | wc -l)\"",
+        "    echo \"  Lines: $(find $dir -type f \\( -name '*.js' -o -name '*.ts' -o -name '*.py' -o -name '*.jsx' -o -name '*.tsx' \\) -exec wc -l {} + 2>/dev/null | tail -1 | awk '{print $1}')\"",
+        "    if [ -f \"$dir/package.json\" ]; then",
+        "      echo \"  Type: Node.js/JavaScript\"",
+        "    elif [ -f \"$dir/pyproject.toml\" ] || [ -f \"$dir/setup.py\" ]; then",
+        "      echo \"  Type: Python\"",
+        "    fi",
+        "    echo ''",
+        "  fi",
+        "done"
+      ],
+      
+      "sync": [
+        "echo '🔄 Syncing with GitHub...'",
+        "echo ''",
+        "echo 'Fetching updates...'",
+        "git fetch --all",
+        "echo ''",
+        "echo 'Branch status:'",
+        "git branch -vv",
+        "echo ''",
+        "echo 'Worktree status:'",
+        "for dir in ../yggdrasil-experiments/*; do",
+        "  if [ -d \"$dir\" ]; then",
+        "    echo \"$(basename $dir):\"",
+        "    cd $dir",
+        "    git status --short",
+        "    cd - > /dev/null",
+        "    echo ''",
+        "  fi",
+        "done"
+      ],
+      
+      "import": [
+        "echo '📦 Running import script...'",
+        "powershell.exe -ExecutionPolicy Bypass -File ./import-experiments.ps1"
+      ],
+      
+      "new-experiment": [
+        "if [ -z \"$1\" ]; then",
+        "  echo 'Usage: devbox run new-experiment <name>'",
+        "  exit 1",
+        "fi",
+        "echo 'Creating new experiment: $1'",
+        "git worktree add -b exp/$1 ../yggdrasil-experiments/$1",
+        "echo 'Experiment created at: ../yggdrasil-experiments/$1'",
+        "echo 'Next steps:'",
+        "echo '  cd ../yggdrasil-experiments/$1'",
+        "echo '  devbox init'",
+        "echo '  # Add your code...'",
+        "echo '  git add .'",
+        "echo '  git commit -m \"feat: initialize $1 experiment\"'",
+        "echo '  git push -u origin exp/$1'"
+      ],
+      
+      "clean-worktrees": [
+        "echo 'Cleaning up worktrees...'",
+        "git worktree prune",
+        "echo 'Done!'"
+      ]
+    }
+  }
+}
