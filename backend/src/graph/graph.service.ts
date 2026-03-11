@@ -27,10 +27,10 @@ export class GraphService {
   /**
    * Create a node in the graph.
    */
-  async createNode(label: string, properties: Record<string, unknown>): Promise<string> {
+  async createNode(label: string, _properties: Record<string, unknown>): Promise<string> {
     this.logger.debug(`Creating node [${label}]`);
     // TODO: Execute Cypher: CREATE (n:{label} $props) RETURN n
-    return properties['id'] as string;
+    return _properties['id'] as string;
   }
 
   /**
@@ -40,7 +40,7 @@ export class GraphService {
     sourceId: string,
     targetId: string,
     type: string,
-    properties?: Record<string, unknown>,
+    _properties?: Record<string, unknown>,
   ): Promise<string> {
     this.logger.debug(`Creating edge (${sourceId})-[${type}]->(${targetId})`);
     // TODO: Execute Cypher: MATCH (a), (b) WHERE a.id=$sourceId AND b.id=$targetId CREATE (a)-[r:{type} $props]->(b)
@@ -52,8 +52,8 @@ export class GraphService {
    */
   async queryNodes(
     label?: string,
-    filters?: Record<string, unknown>,
-    limit?: number,
+    _filters?: Record<string, unknown>,
+    _limit?: number,
   ): Promise<Record<string, unknown>[]> {
     this.logger.debug(`Querying nodes [${label || '*'}]`);
     // TODO: Build and execute Cypher query
