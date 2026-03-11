@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { CapturePayloadDto, UpdateNodeDto } from './capture.dto';
 import { ExtractionService } from './extraction.service';
@@ -170,7 +170,7 @@ export class CaptureService {
   async getNode(id: string) {
     const node = this.nodes.get(id);
     if (!node) {
-      return { error: 'Node not found' };
+      throw new NotFoundException('Node not found');
     }
     return { node, edges: [], relatedNodes: [] };
   }
@@ -178,7 +178,7 @@ export class CaptureService {
   async updateNode(id: string, update: UpdateNodeDto) {
     const node = this.nodes.get(id);
     if (!node) {
-      return { success: false, error: 'Node not found' };
+      throw new NotFoundException('Node not found');
     }
 
     if (update.title !== undefined) node.title = update.title;

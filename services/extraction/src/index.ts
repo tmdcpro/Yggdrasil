@@ -75,13 +75,16 @@ function validateUrl(url: string): void {
 
   const hostname = parsed.hostname.toLowerCase();
 
-  // Block localhost variants
+  // Block localhost variants (note: new URL returns bracketed IPv6, e.g. '[::1]')
   if (
     hostname === 'localhost' ||
     hostname === '127.0.0.1' ||
+    hostname === '[::1]' ||
     hostname === '::1' ||
     hostname === '0.0.0.0' ||
-    hostname.endsWith('.localhost')
+    hostname.endsWith('.localhost') ||
+    hostname.startsWith('[::ffff:') ||
+    hostname.startsWith('[0')
   ) {
     throw new Error('Requests to localhost are not allowed');
   }
