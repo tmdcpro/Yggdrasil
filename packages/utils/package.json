@@ -1,0 +1,17 @@
+{
+  "name": "@yggdrasil/utils",
+  "version": "0.1.0",
+  "description": "Shared utilities for Yggdrasil",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@yggdrasil/types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

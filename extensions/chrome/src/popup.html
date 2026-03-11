@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yggdrasil Capture</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>Yggdrasil</h1>
+      <span class="status" id="status">Connecting...</span>
+    </header>
+
+    <section class="capture-form">
+      <div class="field">
+        <label for="captureType">Capture Type</label>
+        <select id="captureType">
+          <option value="url">Page URL</option>
+          <option value="text">Selected Text</option>
+          <option value="link">Link</option>
+          <option value="image">Image</option>
+          <option value="screenshot">Screenshot</option>
+          <option value="code">Code Snippet</option>
+          <option value="video">Video</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="title">Title</label>
+        <input type="text" id="title" placeholder="Auto-generated if empty">
+      </div>
+
+      <div class="field">
+        <label for="content">Content / URL</label>
+        <textarea id="content" rows="3" placeholder="Will be auto-filled from page"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="tags">Tags (comma-separated)</label>
+        <input type="text" id="tags" placeholder="e.g. ai, research, tools">
+      </div>
+
+      <div class="field checkbox">
+        <input type="checkbox" id="enableAi" checked>
+        <label for="enableAi">Enable AI extraction &amp; auto-tagging</label>
+      </div>
+
+      <!-- AI Suggestions (populated after extraction) -->
+      <div id="aiSuggestions" class="ai-suggestions" style="display:none;">
+        <label>AI Suggestions</label>
+        <div id="suggestedTags" class="tag-list"></div>
+      </div>
+
+      <button id="captureBtn" class="btn-primary">Save to Yggdrasil</button>
+    </section>
+
+    <section class="recent" id="recentSection" style="display:none;">
+      <h2>Recent Captures</h2>
+      <div id="recentList" class="recent-list"></div>
+    </section>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yggdrasil Capture - Settings</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a; color: #e2e8f0; padding: 32px; max-width: 600px; margin: 0 auto;
+    }
+    h1 { font-size: 24px; color: #38bdf8; margin-bottom: 24px; }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+    .field input, .field select {
+      width: 100%; padding: 10px 12px; background: #1e293b; border: 1px solid #334155;
+      border-radius: 8px; color: #e2e8f0; font-size: 14px; outline: none;
+    }
+    .field input:focus { border-color: #38bdf8; }
+    .field small { display: block; margin-top: 4px; color: #64748b; font-size: 12px; }
+    .field.checkbox { display: flex; align-items: center; gap: 10px; }
+    .field.checkbox input { width: auto; }
+    .field.checkbox label { margin-bottom: 0; }
+    button {
+      padding: 10px 24px; background: #38bdf8; color: #0f172a; font-weight: 700;
+      border: none; border-radius: 8px; cursor: pointer; font-size: 14px;
+    }
+    button:hover { opacity: 0.9; }
+    .saved { color: #10b981; margin-left: 12px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Yggdrasil Capture Settings</h1>
+
+  <div class="field">
+    <label for="apiUrl">API URL</label>
+    <input type="url" id="apiUrl" value="http://localhost:5000/api">
+    <small>The Yggdrasil backend API endpoint</small>
+  </div>
+
+  <div class="field checkbox">
+    <input type="checkbox" id="enableAi" checked>
+    <label for="enableAi">Enable AI extraction and auto-tagging by default</label>
+  </div>
+
+  <div class="field">
+    <label for="defaultTags">Default Tags (comma-separated)</label>
+    <input type="text" id="defaultTags" placeholder="e.g. inbox, unsorted">
+    <small>Tags automatically added to every capture</small>
+  </div>
+
+  <button id="saveBtn">Save Settings</button>
+  <span class="saved" id="savedMsg" style="display:none;">Settings saved!</span>
+
+  <script>
+    const apiUrlEl = document.getElementById('apiUrl');
+    const enableAiEl = document.getElementById('enableAi');
+    const defaultTagsEl = document.getElementById('defaultTags');
+    const saveBtnEl = document.getElementById('saveBtn');
+    const savedMsgEl = document.getElementById('savedMsg');
+
+    // Load settings
+    chrome.storage.sync.get({
+      apiUrl: 'http://localhost:5000/api',
+      enableAi: true,
+      defaultTags: '',
+    }, (settings) => {
+      apiUrlEl.value = settings.apiUrl;
+      enableAiEl.checked = settings.enableAi;
+      defaultTagsEl.value = settings.defaultTags;
+    });
+
+    // Save settings
+    saveBtnEl.addEventListener('click', () => {
+      chrome.storage.sync.set({
+        apiUrl: apiUrlEl.value,
+        enableAi: enableAiEl.checked,
+        defaultTags: defaultTagsEl.value,
+      }, () => {
+        savedMsgEl.style.display = 'inline';
+        setTimeout(() => { savedMsgEl.style.display = 'none'; }, 2000);
+      });
+    });
+  </script>
+</body>
+</html>
