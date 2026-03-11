@@ -57,9 +57,55 @@ app.post('/extract/html', (req, res) => {
 });
 
 /**
+ * Validate URL to prevent SSRF attacks.
+ * Blocks localhost, private networks, and non-http(s) schemes.
+ */
+function validateUrl(url: string): void {
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error('Invalid URL');
+  }
+
+  // Only allow http and https schemes
+  if (!['http:', 'https:'].includes(parsed.protocol)) {
+    throw new Error(`Unsupported protocol: ${parsed.protocol}`);
+  }
+
+  const hostname = parsed.hostname.toLowerCase();
+
+  // Block localhost variants
+  if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname === '0.0.0.0' ||
+    hostname.endsWith('.localhost')
+  ) {
+    throw new Error('Requests to localhost are not allowed');
+  }
+
+  // Block private/internal network ranges
+  const privatePatterns = [
+    /^10\./,           // 10.0.0.0/8
+    /^172\.(1[6-9]|2\d|3[01])\./, // 172.16.0.0/12
+    /^192\.168\./,     // 192.168.0.0/16
+    /^169\.254\./,     // Link-local
+    /^0\./,            // 0.0.0.0/8
+  ];
+
+  if (privatePatterns.some((p) => p.test(hostname))) {
+    throw new Error('Requests to private networks are not allowed');
+  }
+}
+
+/**
  * Basic URL metadata extraction via fetch
  */
 async function extractUrlMetadata(url: string) {
+  validateUrl(url);
+
   const response = await fetch(url, {
     headers: {
       'User-Agent': 'Yggdrasil/0.1.0 (Knowledge Graph Studio)',

@@ -14,8 +14,8 @@ out/
 .env.*.local
 .envrc
 
-# Lock files (optional - remove if you want to track)
-pnpm-lock.yaml
+# Lock files
+# pnpm-lock.yaml is tracked for reproducible installs
 
 # IDE
 .idea/
