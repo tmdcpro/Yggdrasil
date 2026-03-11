@@ -4,8 +4,8 @@
 
 import type { AnyNode } from './nodes';
 import type { Edge } from './edges';
-import type { CapturePayload, CaptureResult, ExtractionResult } from './capture';
-import type { Tag, SuggestedTag } from './capture';
+import type { CapturePayload, CaptureResult, ExtractionResult, SuggestedTag } from './capture';
+import type { Tag } from './tags';
 
 /**
  * Generic paginated response

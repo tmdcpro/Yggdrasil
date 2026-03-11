@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CaptureController } from './capture.controller';
+import { CaptureController, NodesController, TagsController } from './capture.controller';
 import { CaptureService } from './capture.service';
 import { ExtractionService } from './extraction.service';
 
 @Module({
-  controllers: [CaptureController],
+  controllers: [CaptureController, NodesController, TagsController],
   providers: [CaptureService, ExtractionService],
   exports: [CaptureService],
 })

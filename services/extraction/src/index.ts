@@ -7,9 +7,9 @@
  *          platform-specific extractors (YouTube, GitHub, Twitter).
  */
 
-import express from 'express';
+import express, { Express } from 'express';
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
 
 const PORT = process.env.EXTRACTION_PORT || 5001;

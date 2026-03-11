@@ -43,7 +43,7 @@ export const useCaptureStore = create<CaptureStore>((set) => ({
     set({ loading: true, error: null });
     try {
       const data = await api.capture.recent(50);
-      set({ items: data.items as CaptureItem[], loading: false });
+      set({ items: data.items as unknown as CaptureItem[], loading: false });
     } catch (error) {
       set({
         error: error instanceof Error ? error.message : 'Failed to fetch',
@@ -58,7 +58,7 @@ export const useCaptureStore = create<CaptureStore>((set) => ({
       await api.capture.create(payload);
       // Refresh the list after capture
       const data = await api.capture.recent(50);
-      set({ items: data.items as CaptureItem[], loading: false });
+      set({ items: data.items as unknown as CaptureItem[], loading: false });
     } catch (error) {
       set({
         error: error instanceof Error ? error.message : 'Capture failed',

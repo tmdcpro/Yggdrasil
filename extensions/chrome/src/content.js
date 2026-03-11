@@ -183,7 +183,7 @@ function showCaptureIndicator(type, data) {
       <div class="yggdrasil-indicator__icon">&#10003;</div>
       <div class="yggdrasil-indicator__text">
         <strong>Saved to Yggdrasil</strong>
-        <span>${title}${tagCount > 0 ? ` (${tagCount} tags)` : ''}</span>
+        <span>${escapeHtml(title)}${tagCount > 0 ? ` (${tagCount} tags)` : ''}</span>
       </div>
     `;
   } else {
@@ -191,7 +191,7 @@ function showCaptureIndicator(type, data) {
       <div class="yggdrasil-indicator__icon">&#10007;</div>
       <div class="yggdrasil-indicator__text">
         <strong>Capture Failed</strong>
-        <span>${typeof data === 'string' ? data : 'Please try again'}</span>
+        <span>${typeof data === 'string' ? escapeHtml(data) : 'Please try again'}</span>
       </div>
     `;
   }
@@ -203,4 +203,10 @@ function showCaptureIndicator(type, data) {
     indicator.classList.add('yggdrasil-indicator--fade');
     setTimeout(() => indicator.remove(), 300);
   }, 3000);
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }

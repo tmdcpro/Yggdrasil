@@ -215,7 +215,7 @@ async function loadRecent() {
         el.className = 'recent-item';
         el.innerHTML = `
           <span class="recent-item__title">${escapeHtml(item.title)}</span>
-          <span class="recent-item__type">${item.type}</span>
+          <span class="recent-item__type">${escapeHtml(item.type)}</span>
         `;
         recentListEl.appendChild(el);
       }

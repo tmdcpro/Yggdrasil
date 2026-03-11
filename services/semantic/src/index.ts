@@ -6,9 +6,9 @@
  * Phase 2: LLM integration (OpenAI/Anthropic/Ollama) via LangChain or Semantica.
  */
 
-import express from 'express';
+import express, { Express } from 'express';
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
 
 const PORT = process.env.SEMANTIC_PORT || 5002;

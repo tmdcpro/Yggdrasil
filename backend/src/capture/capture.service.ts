@@ -6,7 +6,7 @@ import { ExtractionService } from './extraction.service';
 /**
  * In-memory store for MVP. Will be replaced with Neo4j + PostgreSQL.
  */
-interface StoredNode {
+export interface StoredNode {
   id: string;
   type: string;
   title: string;
@@ -18,7 +18,7 @@ interface StoredNode {
   modified: string;
 }
 
-interface StoredTag {
+export interface StoredTag {
   id: string;
   label: string;
   source: 'ai' | 'manual';
