@@ -103,7 +103,11 @@ function validateUrl(url: string): void {
 /**
  * Basic URL metadata extraction via fetch
  */
-async function extractUrlMetadata(url: string) {
+async function extractUrlMetadata(url: string, depth = 0): Promise<Record<string, unknown>> {
+  if (depth > 5) {
+    throw new Error('Too many redirects');
+  }
+
   validateUrl(url);
 
   const response = await fetch(url, {
@@ -111,7 +115,19 @@ async function extractUrlMetadata(url: string) {
       'User-Agent': 'Yggdrasil/0.1.0 (Knowledge Graph Studio)',
     },
     signal: AbortSignal.timeout(15000),
+    redirect: 'manual',
   });
+
+  // Handle redirects manually to prevent SSRF via redirect
+  if ([301, 302, 303, 307, 308].includes(response.status)) {
+    const location = response.headers.get('location');
+    if (location) {
+      const redirectUrl = new URL(location, url).href;
+      validateUrl(redirectUrl);
+      return extractUrlMetadata(redirectUrl, depth + 1);
+    }
+    throw new Error('Redirect with no location header');
+  }
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
