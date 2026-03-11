@@ -15,7 +15,7 @@ const captureTypes: { value: CaptureType; label: string }[] = [
 ];
 
 export function CaptureReview() {
-  const { capture, fetchSuggestions, suggestions, loading } = useCaptureStore();
+  const { capture, fetchSuggestions, suggestions, loading, error } = useCaptureStore();
 
   const [captureType, setCaptureType] = useState<CaptureType>('url');
   const [content, setContent] = useState('');
@@ -77,15 +77,18 @@ export function CaptureReview() {
       },
     });
 
-    setSubmitted(true);
-    setTimeout(() => {
-      setContent('');
-      setTitle('');
-      setTags([]);
-      setTagInput('');
-      setSelectedSuggestions(new Set());
-      setSubmitted(false);
-    }, 2000);
+    const currentError = useCaptureStore.getState().error;
+    if (!currentError) {
+      setSubmitted(true);
+      setTimeout(() => {
+        setContent('');
+        setTitle('');
+        setTags([]);
+        setTagInput('');
+        setSelectedSuggestions(new Set());
+        setSubmitted(false);
+      }, 2000);
+    }
   };
 
   return (
@@ -235,6 +238,13 @@ export function CaptureReview() {
           </button>
         </div>
       </div>
+
+      {/* Error Display */}
+      {error && (
+        <div className="mb-4 p-3 bg-red-900/30 border border-red-500/50 rounded-lg text-sm text-red-400">
+          {error}
+        </div>
+      )}
 
       {/* Submit */}
       <button
