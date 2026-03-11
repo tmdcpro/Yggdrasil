@@ -29,7 +29,7 @@ export class CaptureController {
   @Get('recent')
   @ApiOperation({ summary: 'Get recently captured items' })
   async getRecent(@Query('limit') limit?: number) {
-    return this.captureService.getRecent(limit || 20);
+    return this.captureService.getRecent(Number(limit) || 20);
   }
 }
 
@@ -48,8 +48,8 @@ export class NodesController {
     @Query('tags') tags?: string,
   ) {
     return this.captureService.listNodes({
-      page: page || 1,
-      pageSize: pageSize || 20,
+      page: Number(page) || 1,
+      pageSize: Number(pageSize) || 20,
       type,
       search,
       tags: tags ? tags.split(',') : undefined,

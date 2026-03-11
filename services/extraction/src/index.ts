@@ -92,6 +92,7 @@ function validateUrl(url: string): void {
   // Block private/internal network ranges
   const privatePatterns = [
     /^10\./,           // 10.0.0.0/8
+    /^127\./,          // 127.0.0.0/8 (loopback)
     /^172\.(1[6-9]|2\d|3[01])\./, // 172.16.0.0/12
     /^192\.168\./,     // 192.168.0.0/16
     /^169\.254\./,     // Link-local
