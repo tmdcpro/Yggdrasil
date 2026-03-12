@@ -1,0 +1,16 @@
+# Yggdrasil Monorepo Environment Configuration
+version: 1
+
+setup:
+  - command: pnpm install
+    description: Install all workspace dependencies
+
+maintenance:
+  - command: pnpm install
+    description: Keep dependencies up to date
+
+validation:
+  - command: pnpm lint
+    description: Run ESLint across frontend and backend
+  - command: pnpm typecheck
+    description: Run TypeScript type checking
