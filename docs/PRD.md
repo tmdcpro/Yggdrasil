@@ -1,202 +1,260 @@
-# Product Requirements Document: Knowledge Graph Studio
+# Product Requirements Document: Yggdrasil
 
 ## Executive Summary
 
-Knowledge Graph Studio is a highly customizable, interactive knowledge management platform that combines visual graph-based data organization with powerful web extraction capabilities. The platform eliminates the traditional boundaries between users and developers, providing complete transparency and customizability at every level.
+Yggdrasil is a personal knowledge graph and data collection/management system ("second brain") that captures, organizes, and visualizes information with AI-powered semantic understanding. It combines right-click content capture from any source with an intelligent knowledge graph that auto-tags, classifies, and connects information using ontologies, taxonomies, and semantic relationships.
+
+The name "Yggdrasil" references the Norse world tree connecting all realms of knowledge -- reflecting the system's goal of interconnecting all captured information into a navigable, living knowledge structure.
 
 ## Vision Statement
 
-To create the ultimate knowledge management system where every piece of information is interconnected, observable, and fully customizable - empowering users to build their personal knowledge universes with complete control over data extraction, organization, and visualization.
+To create the ultimate personal knowledge management system where every piece of captured information is automatically enriched with semantic meaning, interconnected through intelligent relationships, and navigable through highly customizable views -- empowering users to build their personal knowledge universes with complete control.
 
 ## Core Principles
 
-1. **No User/Developer Distinction**: Every user has full access to source code and system internals
-2. **Complete Observability**: "Peek under the hood" at any time to understand system behavior
-3. **Modular Architecture**: Every component is replaceable and extendable
-4. **Visual-First Design**: GUI-based interaction with code-level customization options
-5. **Semantic Intelligence**: Automatic understanding and categorization of content
+1. **Capture Everything**: Right-click to save anything -- text, images, links, files, URLs, code, screenshots, videos -- from any context
+2. **AI-First Organization**: Automatic metadata extraction, entity recognition, semantic tagging, and relationship inference
+3. **Graph-Native**: All information stored as nodes in a knowledge graph with typed, weighted relationships
+4. **Customizable Views**: Multiple visualization modes (graph, timeline, kanban, table, hierarchy, dashboard) with user-defined custom views
+5. **No User/Developer Distinction**: Every user has full access to source code and system internals
+6. **Complete Observability**: "Peek under the hood" at any time to understand system behavior
+7. **Modular Architecture**: Every component is replaceable and extendable
+8. **Multi-Stream Development**: Experimental features developed in parallel branches for comparison and contrast
 
+## Research and Inspiration
+
+### Open Source Projects Evaluated
+
+| Project | Stars | Key Insight for Yggdrasil |
+|---------|-------|--------------------------|
+| **[Semantica](https://github.com/Hawksight-AI/semantica)** | 711 | AI/semantic backend: entity extraction, ontology engineering, KG building. Strongest candidate for semantic service core. |
+| **[Karakeep](https://github.com/karakeep-app/karakeep)** | 24k | Best reference for AI auto-tagging UX, browser extensions, content capture, Ollama local model support. |
+| **[Cytoscape.js](https://js.cytoscape.org)** | -- | Gold standard for graph visualization in the browser (100k+ nodes). |
+| **[Knowledge Nexus](https://github.com/Jallermax/knowledge-nexus)** | -- | GraphRAG on Neo4j, shows how to connect stack for Q&A. |
+| **[Kappa Graph](https://github.com/aaronsb/knowledge-graph-system)** | -- | Novel "knowledge with weight" concept (grounding scores, disagreement tracking). |
+| **[Unigraph](https://github.com/unigraph-dev/unigraph-dev)** | 751 | Universal PKG connecting Gmail/Calendar/feeds. "Everything is a node" philosophy. |
+
+### Key Differentiators from Existing Tools
+
+- **vs Obsidian**: True graph database (not just file links), AI auto-tagging, right-click capture from anywhere
+- **vs Roam Research**: Semantic relationships beyond bi-directional links, ontology/taxonomy support, customizable views
+- **vs Notion**: Graph-native storage, advanced extraction pipeline, full code access
+- **vs Karakeep**: Deeper semantic understanding (ontologies, hierarchies), custom graph views, multi-stream dev
 ## User Personas
 
-### 1. Research Professional
+### 1. Knowledge Worker / Researcher
 - **Needs**: Organize vast amounts of research materials, track sources, build knowledge connections
 - **Goals**: Create comprehensive knowledge graphs for research projects
 - **Pain Points**: Information scattered across multiple platforms, difficulty tracking relationships
+- **Key Feature**: AI auto-tagging with domain-specific ontologies
 
-### 2. Content Creator
+### 2. Content Creator / Curator
 - **Needs**: Collect inspiration, organize references, track content ideas
 - **Goals**: Build visual mood boards and reference libraries
 - **Pain Points**: Losing track of inspiration sources, manual organization effort
+- **Key Feature**: Right-click capture from any webpage with metadata extraction
 
-### 3. Developer/Power User
-- **Needs**: Customize data extraction workflows, build automation, extend functionality
-- **Goals**: Create custom plugins and workflows for specific use cases
+### 3. Developer / Power User
+- **Needs**: Customize extraction workflows, build automation, extend functionality
+- **Goals**: Create custom plugins and views for specific use cases
 - **Pain Points**: Rigid tools that don't adapt to specific workflows
+- **Key Feature**: Full source access, plugin system, multi-stream experiments
 
-### 4. Knowledge Worker
-- **Needs**: Organize bookmarks, documents, and web resources
-- **Goals**: Build personal knowledge management system
+### 4. Lifelong Learner
+- **Needs**: Organize bookmarks, notes, videos, articles into a coherent knowledge structure
+- **Goals**: Build a "second brain" that grows smarter over time
 - **Pain Points**: Information overload, lack of semantic organization
+- **Key Feature**: Semantic relationship inference, knowledge graph visualization
 
 ## Feature Requirements
 
-### 1. Core Graph Engine
+### 1. Content Capture System (Priority: P0)
 
-#### 1.1 Graph Manipulation
-- **Interactive Visualization**: Pan, zoom, rotate 3D/2D graphs
-- **Node Operations**: Create, edit, delete, merge, split nodes
-- **Edge Operations**: Create relationships with typed connections
-- **Clustering**: Automatic and manual grouping of related nodes
-- **Layouts**: Multiple layout algorithms (force-directed, hierarchical, circular)
+#### 1.1 Chrome Extension -- Right-Click Capture
+- **Right-click context menu** on any selected text, image, link, or page
+- **Capture types**: Page URL, selected text, images, links, files, code snippets, screenshots, video URLs
+- **AI metadata extraction**: Auto-grabs URL, description, source, author, date, favicon, OpenGraph data
+- **User review step**: Choose/select which metadata to include, edit AI suggestions, specify types
+- **Quick capture**: One-click save with AI defaults (no review step)
+- **Sidebar panel**: Optional sidebar for richer capture without leaving the page
 
-#### 1.2 Data Models
-- **Node Types**:
-  - URL/Bookmark nodes
-  - Text/Document nodes
-  - Image/Video nodes
-  - Person/Entity nodes
-  - Concept/Tag nodes
-  - Collection/Folder nodes
-- **Edge Types**:
-  - References/Citations
-  - Contains/Part-of
-  - Similar-to/Related
-  - Temporal relationships
-  - Custom relationship types
+#### 1.2 Manual Capture (Web UI)
+- Content type selector (Page URL, Text/Note, Code Snippet, Link, Image URL, Video URL, Screenshot)
+- Title field with auto-generation
+- Content/URL input
+- AI extraction toggle
+- Tag management (manual + AI-suggested tags)
+- Save with preview
 
-#### 1.3 Query Capabilities
-- **Visual Query Builder**: Drag-and-drop query construction
-- **Natural Language Queries**: "Show me all videos related to machine learning from last month"
-- **Graph Pattern Matching**: Find subgraphs matching specific patterns
-- **Saved Queries**: Store and reuse complex queries
+#### 1.3 Extraction Pipeline
+- **URL metadata extraction**: Title, description, author, date, favicon, OpenGraph, Twitter Card
+- **Content extraction**: Main text, images, structured data (JSON-LD, microdata)
+- **Screenshot capture**: Full page and viewport screenshots
+- **Video extraction**: Thumbnails, metadata, transcripts (YouTube, Vimeo)
+- **SSRF protection**: Block localhost, private networks, IPv6 loopback, redirect validation
 
-### 2. Data Extraction System
+### 2. AI-Powered Semantic Engine (Priority: P0)
 
-#### 2.1 Web Extraction
-- **Visual Selection**: Click-and-select elements for extraction
-- **DOM-based Extraction**: CSS/XPath selectors
-- **Computer Vision**: YOLO-based visual element detection
-- **Screenshot Capture**: Full page and viewport captures
-- **Video Extraction**: Download videos, extract thumbnails, metadata
+#### 2.1 Auto-Tagging
+- Entity recognition (people, places, organizations, concepts)
+- Topic classification with confidence scores
+- Keyword extraction from content
+- Language detection
+- Sentiment analysis
 
-#### 2.2 Platform-Specific Extractors
-- **YouTube**: Videos, playlists, channels, comments, transcripts
-- **Twitter/X**: Threads, profiles, media, engagement metrics
-- **GitHub**: Repositories, issues, code snippets, discussions
-- **Academic**: Papers, citations, authors, institutions
-- **Generic**: Any website with customizable extraction rules
+#### 2.2 Semantic Relationships
+- **Ontology mappings**: Map captured content to domain ontologies (e.g., Dublin Core, Schema.org)
+- **Taxonomy hierarchies**: Auto-classify into user-defined or standard taxonomies
+- **Relationship inference**: Suggest connections between nodes based on semantic similarity
+- **Domain detection**: Identify which knowledge domain(s) content belongs to
+- **Weighted edges**: Confidence-scored relationships between nodes
 
-#### 2.3 Automation Workflows
-- **Workflow Designer**: Visual workflow creation interface
-- **Scheduled Extraction**: Periodic data collection
-- **Trigger-based**: Extract on specific events
-- **Batch Processing**: Process multiple URLs simultaneously
-- **Data Transformation**: Clean, normalize, enrich extracted data
+#### 2.3 AI Providers
+- **Cloud**: OpenAI, Anthropic, Cohere (via API keys)
+- **Local**: Ollama with local models (Llama, Mistral, etc.)
+- **Embeddings**: Sentence Transformers or OpenAI Ada for semantic similarity
+- **Fallback chain**: Cloud -> Local -> Rule-based heuristics
 
-### 3. Semantic Intelligence
+### 3. Knowledge Graph Engine (Priority: P0)
 
-#### 3.1 Auto-Tagging
-- **Entity Recognition**: Identify people, places, organizations
-- **Topic Classification**: Automatically categorize content
-- **Sentiment Analysis**: Understand content tone and emotion
-- **Language Detection**: Multi-language support
+#### 3.1 Data Model
+- **Node Types**: URL/Bookmark, Text/Document, Image/Video, Person/Entity, Concept/Tag, Collection/Folder, Ontology, Taxonomy
+- **Edge Types**: References, Contains/Part-of, Similar-to, Derived-from, Temporal, Belongs-to, Custom
+- **Properties**: Typed, validated, versioned node/edge properties
+- **Metadata**: Creation date, source, confidence scores, extraction provenance
 
-#### 3.2 Ontology Building
-- **Taxonomy Editor**: Visual hierarchy creation
-- **Relationship Inference**: Suggest connections between nodes
-- **Concept Mapping**: Build semantic networks
-- **Knowledge Inheritance**: Hierarchical property propagation
+#### 3.2 Graph Operations
+- CRUD for nodes and edges
+- Graph traversal (BFS/DFS)
+- Shortest path, connected components
+- Clustering and community detection
+- Semantic similarity search via embeddings
+- Full-text search across all node content
 
-#### 3.3 AI Integration
-- **LLM Integration**: OpenAI, Anthropic, local models
-- **Embeddings**: Semantic similarity search
-- **Summarization**: Auto-generate node summaries
-- **Question Answering**: Query knowledge graph with natural language
+#### 3.3 Storage
+- **Primary**: Neo4j for graph storage (in-memory fallback for development)
+- **Metadata**: PostgreSQL for structured metadata, user settings
+- **Cache**: Redis for query caching, session management
+- **Vectors**: ChromaDB for embedding storage and similarity search
+- **Media**: S3/MinIO for images, screenshots, files
+### 4. Visualization and Custom Views (Priority: P1)
 
-### 4. User Interface
+#### 4.1 Graph View
+- 2D interactive graph (Cytoscape.js) with pan, zoom, selection
+- 3D graph view (Three.js / React Three Fiber) for immersive exploration
+- Force-directed, hierarchical, circular, and custom layouts
+- Node filtering by type, tag, date, domain
+- Edge filtering by relationship type and weight
+- Mini-map for navigation
+- Focus mode for subgraph exploration
 
-#### 4.1 Main Application Shell
-- **Customizable Layout**: Drag-and-drop panel arrangement
-- **Multi-window Support**: Detachable panels
-- **Theme System**: Light/dark/custom themes
-- **Responsive Design**: Desktop, tablet, mobile support
+#### 4.2 Additional View Types
+- **Timeline**: Chronological view of captures
+- **Kanban**: Board view organized by tags, domains, or status
+- **Table**: Spreadsheet-like view with sorting, filtering, grouping
+- **Hierarchy**: Tree view based on taxonomy/ontology relationships
+- **Dashboard**: Customizable widgets showing stats, recent captures, tag clouds
+- **Map**: Geographic view for location-tagged content
 
-#### 4.2 Graph Visualization Panel
-- **2D/3D Toggle**: Switch between visualization modes
-- **Mini-map**: Overview navigation
-- **Focus Mode**: Highlight specific subgraphs
-- **Time-lapse**: View graph evolution over time
+#### 4.3 Custom Views System
+- User-defined view configurations (filters, layouts, groupings)
+- Saved views with shareable URLs
+- View templates for common patterns
+- Plugin-based custom view renderers
 
-#### 4.3 Property Inspector
-- **Node Details**: View/edit all node properties
-- **Relationship Editor**: Manage connections
-- **Metadata Viewer**: See extraction details, timestamps
-- **History**: Track changes to nodes/edges
+### 5. User Interface (Priority: P1)
 
-#### 4.4 Command Palette
-- **Quick Actions**: Keyboard-driven commands
-- **Search Everything**: Universal search across all data
-- **Shortcuts**: Customizable keyboard shortcuts
+#### 5.1 Application Shell
+- Sidebar navigation (Dashboard, Capture, Graph, + custom views)
+- Dark theme by default with theme system (light/custom)
+- Responsive design (desktop-first, tablet/mobile support)
+- Command palette (Cmd+K) for quick actions
+- Keyboard shortcuts throughout
 
-### 5. Extensibility
+#### 5.2 Property Inspector
+- Node detail panel with all properties
+- Relationship editor
+- Metadata viewer with extraction provenance
+- Edit history / versioning
 
-#### 5.1 Plugin System
-- **Plugin API**: Well-documented extension points
-- **Hot Reload**: Develop without restarts
-- **Plugin Marketplace**: Share and discover plugins
-- **Sandboxing**: Secure plugin execution
+#### 5.3 Search and Filter
+- Universal search across all content
+- Advanced filters (type, tag, date range, domain, source)
+- Saved searches
+- Natural language queries ("show me all videos about machine learning from last month")
 
-#### 5.2 Custom Components
-- **Node Renderers**: Custom node visualizations
-- **Extractors**: Custom data extraction logic
-- **Analyzers**: Custom data processing
-- **Visualizations**: Custom graph layouts
+### 6. Extensibility (Priority: P2)
 
-#### 5.3 Integration APIs
-- **REST API**: Full CRUD operations
-- **GraphQL**: Flexible data queries
-- **WebSocket**: Real-time updates
-- **Webhooks**: Event notifications
+#### 6.1 Plugin System
+- Plugin API with documented extension points
+- Hot reload during development
+- Plugin marketplace (future)
+- Sandboxed execution
 
-### 6. Observability
+#### 6.2 Platform-Specific Extractors (Plugins)
+- YouTube: Videos, playlists, channels, transcripts
+- Twitter/X: Threads, profiles, media
+- GitHub: Repositories, issues, code snippets
+- Academic: Papers, citations, authors (Semantic Scholar, arXiv)
+- Reddit: Posts, comments, subreddits
+- Generic: Custom CSS/XPath extraction rules
 
-#### 6.1 System Monitoring
-- **Performance Metrics**: CPU, memory, network usage
-- **Query Performance**: Execution plans and optimization
-- **Data Flow Visualization**: See data movement in real-time
-- **Debug Mode**: Step through operations
+#### 6.3 Integration APIs
+- REST API (current: NestJS with Swagger docs)
+- GraphQL API (planned)
+- WebSocket for real-time updates
+- Webhooks for event notifications
+- Import/export (JSON, CSV, Markdown, OPML)
 
-#### 6.2 Audit Trail
-- **Change History**: Complete edit history
-- **User Actions**: Track all operations
-- **Data Lineage**: Source tracking for all data
-- **Version Control**: Branching and merging of graphs
+### 7. Observability and Developer Experience (Priority: P2)
+
+#### 7.1 System Transparency
+- "Peek under the hood" at any time
+- View extraction pipeline steps and intermediate results
+- See AI confidence scores and reasoning
+- Performance metrics dashboard
+
+#### 7.2 Audit Trail
+- Change history for all nodes/edges
+- Data lineage and source tracking
+- Version control for graph state
+
+#### 7.3 Multi-Stream Development
+- Git branch-based experiments for feature variations
+- Git worktrees for parallel development
+- Experiment documentation and comparison
+- See EXPERIMENTS.md for conventions
 
 ## Non-Functional Requirements
 
 ### Performance
-- Handle graphs with 100k+ nodes
+- Handle graphs with 100k+ nodes in visualization
 - Sub-second query response for common operations
 - 60 FPS graph visualization
+- Capture-to-graph latency < 3 seconds
 - Concurrent extraction of 100+ URLs
+
+### Security
+- SSRF protection on all URL extraction (localhost, private networks, IPv6, redirects)
+- XSS prevention in Chrome extension and frontend
+- Input validation with NestJS ValidationPipe (whitelist, transform, forbidNonWhitelisted)
+- No credential exposure in logs or client responses
+- Content Security Policy headers
+- End-to-end encryption option (future)
+- Plugin sandboxing
 
 ### Scalability
 - Horizontal scaling for extraction workers
 - Distributed graph storage
 - CDN support for media assets
-- Multi-user collaboration support
-
-### Security
-- End-to-end encryption option
-- OAuth2/SAML authentication
-- Role-based access control
-- Plugin sandboxing
+- Multi-user collaboration support (future)
 
 ### Reliability
-- 99.9% uptime for core services
-- Automatic backups
-- Data recovery mechanisms
-- Graceful degradation
+- Graceful degradation when AI services unavailable (fallback to rule-based)
+- In-memory graph store when Neo4j unavailable
+- Offline Chrome extension support (queue captures for later sync)
+- Error handling with user-visible feedback (no silent failures)
+- Automatic backups and data recovery
 
 ### Usability
 - Onboarding in < 5 minutes
@@ -204,90 +262,79 @@ To create the ultimate knowledge management system where every piece of informat
 - Contextual help system
 - Progressive disclosure of advanced features
 
+### Data Portability
+- Full export of knowledge graph (nodes, edges, metadata)
+- Standard formats (JSON-LD, RDF, CSV)
+- Import from bookmarks, Obsidian, Notion, Roam
+
+## Technology Stack (Current Implementation)
+
+### Frontend
+- **Framework**: React 18 + TypeScript
+- **State**: Zustand
+- **Styling**: Tailwind CSS
+- **Build**: Vite
+- **Graph Viz**: Cytoscape.js (planned), placeholder ready
+
+### Backend
+- **Framework**: NestJS (Node.js)
+- **API**: REST with Swagger/OpenAPI docs
+- **Validation**: class-validator + class-transformer
+- **Storage**: In-memory (Neo4j integration planned)
+
+### Services
+- **Extraction Service**: Express.js, node-fetch with SSRF protection, cheerio for HTML parsing
+- **Semantic Service**: Express.js, mock AI (real LLM integration planned)
+
+### Browser Extension
+- **Platform**: Chrome (Manifest V3)
+- **Features**: Right-click context menu, popup UI, content script for selection capture
+
+### Infrastructure
+- **Monorepo**: pnpm workspaces
+- **Linting**: ESLint (frontend + backend)
+- **Type Checking**: TypeScript strict mode
+- **Package Manager**: pnpm 8+
+- **Node**: 20+
+
 ## Success Metrics
 
-### Adoption Metrics
-- Daily active users
-- Graphs created per user
-- Nodes created per day
-- Plugin installations
-
-### Engagement Metrics
-- Time spent in application
-- Graph interactions per session
-- Query complexity evolution
-- Feature adoption rate
-
-### Quality Metrics
-- System response time
-- Error rate
-- User-reported issues
-- Performance benchmarks
-
-## MVP Scope
-
-### Phase 1 (Months 1-3)
-- Basic graph creation and visualization
-- Simple web extraction (URLs, text, images)
-- Local storage
-- Basic search functionality
-
-### Phase 2 (Months 4-6)
-- Advanced extraction workflows
-- YouTube/Twitter extractors
-- Basic AI tagging
-- Plugin system foundation
-
-### Phase 3 (Months 7-9)
-- Full semantic intelligence
-- Collaboration features
-- Plugin marketplace
-- Mobile applications
+| Metric | Target | How Measured |
+|--------|--------|-------------|
+| Capture latency | < 3s from click to graph | Timer in extraction pipeline |
+| AI tagging accuracy | > 80% relevant tags | User feedback on suggested tags |
+| Graph query time | < 100ms for common queries | Backend metrics |
+| Visualization FPS | 60 FPS with 1000 nodes | Browser performance monitor |
+| Extension adoption | Works on top 100 websites | Manual testing matrix |
 
 ## Risks and Mitigations
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|------------|--------|------------|
-| Performance degradation with large graphs | High | High | Implement virtualization and lazy loading |
-| Complex UI overwhelming users | Medium | High | Progressive disclosure, guided tutorials |
-| Data extraction blocking | Medium | Medium | Multiple extraction methods, proxy support |
+| LLM API costs at scale | High | Medium | Ollama local fallback, caching, rate limiting |
+| Performance with large graphs | High | High | Virtualization, lazy loading, Sigma.js fallback |
+| Complex UI overwhelming users | Medium | High | Progressive disclosure, sensible defaults |
+| Website extraction blocking | Medium | Medium | Multiple extraction methods, Playwright fallback |
+| Neo4j licensing costs | Low | Medium | ArangoDB or in-memory alternatives |
 | Plugin security issues | Low | High | Sandboxing, code review, permissions system |
-
-## Dependencies
-
-### External Services
-- Neo4j for graph storage
-- PostgreSQL for metadata
-- Redis for caching
-- Cloud storage for media
-- LLM APIs for AI features
-
-### Technical Dependencies
-- React/Vue.js for frontend
-- Node.js/Python for backend
-- Playwright for web extraction
-- D3.js/Cytoscape for visualization
 
 ## Appendices
 
-### A. Mockups and Wireframes
-[To be added: Links to Figma/design files]
+### A. Technical Architecture
+See [ARCHITECTURE.md](./ARCHITECTURE.md)
 
-### B. Technical Architecture
-[See ARCHITECTURE.md]
+### B. Development Setup
+See [DEVELOPMENT.md](./DEVELOPMENT.md)
 
-### C. API Documentation
-[See API.md]
+### C. Multi-Stream Strategy
+See [EXPERIMENTS.md](./EXPERIMENTS.md)
 
-### D. Competitive Analysis
-- Obsidian: Note-taking with graph view
-- Roam Research: Bi-directional linking
-- Notion: All-in-one workspace
-- **Our Differentiation**: Full customizability, advanced extraction, true graph database
+### D. Project Roadmap and Task Queue
+See [ROADMAP.md](./ROADMAP.md)
 
 ---
 
-**Document Version**: 1.0.0  
-**Last Updated**: 2025-10-12  
-**Status**: Draft  
-**Approved By**: Pending
+**Document Version**: 2.0.0
+**Last Updated**: 2026-03-12
+**Status**: Active
+**Author**: @tmdcpro

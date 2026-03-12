@@ -1,649 +1,352 @@
-# Project Roadmap & Task Breakdown
+# Yggdrasil Development Roadmap and Task Queue
 
-## Executive Summary
+> **How to use this document**: This is the living task tracker for Yggdrasil development. Each task has a checkbox indicating completion status. Update checkboxes as work progresses. For the full product requirements, see [PRD.md](./PRD.md).
 
-This document outlines the development roadmap for Knowledge Graph Studio, breaking down the project into phases, sprints, and specific tasks with deliverables and testing criteria.
+## Current Status
 
-## Timeline Overview
-
-- **Phase 1 (MVP)**: Months 1-3 - Core functionality
-- **Phase 2 (Enhanced)**: Months 4-6 - Advanced features
-- **Phase 3 (Scale)**: Months 7-9 - Production ready
-- **Phase 4 (Extend)**: Months 10-12 - Ecosystem growth
-
-## Phase 1: MVP (Months 1-3)
-
-### Sprint 1.1: Foundation (Weeks 1-2)
-
-#### Task 1.1.1: Project Setup
-**Deliverables:**
-- ✅ Repository with jj version control
-- ✅ DevContainer configuration
-- ✅ Basic project structure
-- ✅ Documentation framework
-
-**Testing Criteria:**
-- DevContainer builds successfully
-- All team members can clone and run
-- Documentation is accessible
-
-**Status:** COMPLETE
-
-#### Task 1.1.2: Database Infrastructure
-**Deliverables:**
-- Neo4j instance running
-- PostgreSQL instance running
-- Redis cache configured
-- Database schemas defined
-
-**Testing Criteria:**
-- All databases accessible
-- Connection pooling works
-- Basic CRUD operations pass
-- Performance baseline established
-
-**Effort:** 3 days
-
-#### Task 1.1.3: API Framework Setup
-**Deliverables:**
-- NestJS/FastAPI backend scaffolding
-- GraphQL schema defined
-- REST endpoints structured
-- Authentication middleware
-
-**Testing Criteria:**
-- API responds to health checks
-- GraphQL playground accessible
-- JWT authentication works
-- Rate limiting functional
-
-**Effort:** 5 days
-
-### Sprint 1.2: Core Graph Engine (Weeks 3-4)
-
-#### Task 1.2.1: Graph Data Model
-**Deliverables:**
-- Node type definitions
-- Edge type definitions
-- Property schemas
-- Validation rules
-
-**Testing Criteria:**
-- All node types creatable
-- Edge constraints enforced
-- Property validation works
-- Schema migration successful
-
-**Effort:** 3 days
-
-#### Task 1.2.2: Basic Graph Operations
-**Deliverables:**
-- Create/Read/Update/Delete nodes
-- Create/Read/Update/Delete edges
-- Basic query interface
-- Batch operations
-
-**Testing Criteria:**
-- Unit tests: 90% coverage
-- Integration tests pass
-- Performance: < 100ms for basic ops
-- Concurrent operations handled
-
-**Effort:** 5 days
-
-#### Task 1.2.3: Graph Algorithms
-**Deliverables:**
-- Shortest path implementation
-- Graph traversal (BFS/DFS)
-- Connected components
-- Basic clustering
-
-**Testing Criteria:**
-- Algorithm correctness verified
-- Performance benchmarks met
-- Edge cases handled
-- Memory usage acceptable
-
-**Effort:** 4 days
-
-### Sprint 1.3: Basic UI (Weeks 5-6)
-
-#### Task 1.3.1: Frontend Setup
-**Deliverables:**
-- React/Vue application scaffold
-- Component library integration
-- State management setup
-- Routing configured
-
-**Testing Criteria:**
-- Application builds without errors
-- Hot reload working
-- Routes accessible
-- State persistence works
-
-**Effort:** 2 days
-
-#### Task 1.3.2: Graph Visualization
-**Deliverables:**
-- 2D graph renderer
-- Pan and zoom controls
-- Node selection
-- Basic layouts (force, hierarchical)
-
-**Testing Criteria:**
-- Renders 1000 nodes smoothly
-- 60 FPS maintained
-- Touch controls work
-- Layout algorithms correct
-
-**Effort:** 5 days
-
-#### Task 1.3.3: Node/Edge Management UI
-**Deliverables:**
-- Node creation form
-- Edge creation interface
-- Property editor
-- Delete functionality
-
-**Testing Criteria:**
-- Forms validate correctly
-- API calls successful
-- UI updates in real-time
-- Error handling works
-
-**Effort:** 3 days
-
-### Sprint 1.4: Basic Extraction (Weeks 7-8)
-
-#### Task 1.4.1: URL Extraction
-**Deliverables:**
-- Basic web scraper
-- Metadata extractor
-- Screenshot capture
-- Favicon fetcher
-
-**Testing Criteria:**
-- 90% success rate on top 100 sites
-- Metadata accuracy > 95%
-- Screenshots captured correctly
-- Rate limiting respected
-
-**Effort:** 4 days
-
-#### Task 1.4.2: Text Processing
-**Deliverables:**
-- HTML to text conversion
-- Basic summarization
-- Keyword extraction
-- Language detection
-
-**Testing Criteria:**
-- Text extraction accuracy > 95%
-- Summaries coherent
-- Keywords relevant
-- Languages identified correctly
-
-**Effort:** 3 days
-
-### Sprint 1.5: Storage & Search (Weeks 9-10)
-
-#### Task 1.5.1: Data Persistence
-**Deliverables:**
-- Graph persistence layer
-- Media storage (S3/MinIO)
-- Backup system
-- Data export/import
-
-**Testing Criteria:**
-- No data loss on restart
-- Media URLs accessible
-- Backups restorable
-- Import/export round-trip works
-
-**Effort:** 4 days
-
-#### Task 1.5.2: Basic Search
-**Deliverables:**
-- Full-text search
-- Node property search
-- Filter interface
-- Search results UI
-
-**Testing Criteria:**
-- Search returns relevant results
-- Performance < 500ms
-- Filters work correctly
-- Pagination implemented
-
-**Effort:** 3 days
-
-### Sprint 1.6: MVP Polish (Weeks 11-12)
-
-#### Task 1.6.1: Bug Fixes & Optimization
-**Deliverables:**
-- Critical bugs fixed
-- Performance optimization
-- Memory leaks resolved
-- Error handling improved
-
-**Testing Criteria:**
-- No P0/P1 bugs remain
-- Performance targets met
-- Memory stable over 24h
-- Errors logged properly
-
-**Effort:** 5 days
-
-#### Task 1.6.2: Documentation & Testing
-**Deliverables:**
-- API documentation complete
-- User guide written
-- Test coverage > 80%
-- Deployment guide
-
-**Testing Criteria:**
-- Docs build without errors
-- Examples work
-- Tests pass in CI
-- Deploy succeeds
-
-**Effort:** 3 days
-
-## Phase 2: Enhanced Features (Months 4-6)
-
-### Sprint 2.1: Advanced Extraction (Weeks 13-15)
-
-#### Task 2.1.1: Platform-Specific Extractors
-**Deliverables:**
-- YouTube extractor (videos, playlists)
-- Twitter/X extractor (threads, profiles)
-- GitHub extractor (repos, issues)
-- Academic paper extractor
-
-**Testing Criteria:**
-- Each extractor 90% success rate
-- Rate limits respected
-- Data structured correctly
-- Media downloaded successfully
-
-**Effort:** 8 days
-
-#### Task 2.1.2: Visual Extraction
-**Deliverables:**
-- YOLO integration
-- Element detection
-- OCR capability
-- Visual similarity
-
-**Testing Criteria:**
-- Detection accuracy > 85%
-- OCR accuracy > 95%
-- Performance acceptable
-- GPU acceleration works
-
-**Effort:** 5 days
-
-### Sprint 2.2: Workflow Engine (Weeks 16-18)
-
-#### Task 2.2.1: Workflow Designer
-**Deliverables:**
-- Visual workflow builder
-- Step library
-- Condition/loop support
-- Variable management
-
-**Testing Criteria:**
-- Workflows execute correctly
-- UI intuitive (user testing)
-- Complex flows supported
-- Error handling robust
-
-**Effort:** 6 days
-
-#### Task 2.2.2: Automation Features
-**Deliverables:**
-- Scheduled workflows
-- Trigger system
-- Webhook integration
-- Notification system
-
-**Testing Criteria:**
-- Schedules execute on time
-- Triggers fire correctly
-- Webhooks received
-- Notifications delivered
-
-**Effort:** 4 days
-
-### Sprint 2.3: AI Integration (Weeks 19-21)
-
-#### Task 2.3.1: LLM Integration
-**Deliverables:**
-- OpenAI integration
-- Local LLM support
-- Prompt management
-- Response caching
-
-**Testing Criteria:**
-- API calls successful
-- Responses coherent
-- Caching reduces costs
-- Fallback works
-
-**Effort:** 4 days
-
-#### Task 2.3.2: Semantic Features
-**Deliverables:**
-- Auto-tagging system
-- Entity extraction
-- Sentiment analysis
-- Topic modeling
-
-**Testing Criteria:**
-- Tagging accuracy > 80%
-- Entities identified correctly
-- Sentiment reasonable
-- Topics meaningful
-
-**Effort:** 5 days
-
-### Sprint 2.4: Advanced UI (Weeks 22-24)
-
-#### Task 2.4.1: 3D Visualization
-**Deliverables:**
-- 3D graph renderer
-- VR support (optional)
-- Advanced layouts
-- Performance optimization
-
-**Testing Criteria:**
-- 60 FPS with 5000 nodes
-- VR mode functional
-- Layouts visually appealing
-- GPU acceleration works
-
-**Effort:** 6 days
-
-#### Task 2.4.2: Collaboration Features
-**Deliverables:**
-- Real-time sync
-- Cursor sharing
-- Comments system
-- Version history
-
-**Testing Criteria:**
-- Changes sync < 100ms
-- Multiple users supported
-- Comments threaded properly
-- History browsable
-
-**Effort:** 5 days
-
-## Phase 3: Production Ready (Months 7-9)
-
-### Sprint 3.1: Plugin System (Weeks 25-27)
-
-#### Task 3.1.1: Plugin Architecture
-**Deliverables:**
-- Plugin API defined
-- Lifecycle hooks
-- Sandboxing implementation
-- Hot reload support
-
-**Testing Criteria:**
-- Plugins load/unload cleanly
-- API comprehensive
-- Sandbox secure
-- No performance impact
-
-**Effort:** 6 days
-
-#### Task 3.1.2: Plugin Marketplace
-**Deliverables:**
-- Plugin registry
-- Installation UI
-- Update system
-- Rating/review system
-
-**Testing Criteria:**
-- Plugins discoverable
-- Installation smooth
-- Updates work
-- Reviews visible
-
-**Effort:** 4 days
-
-### Sprint 3.2: Performance & Scale (Weeks 28-30)
-
-#### Task 3.2.1: Performance Optimization
-**Deliverables:**
-- Query optimization
-- Caching strategy
-- Lazy loading
-- Virtual scrolling
-
-**Testing Criteria:**
-- 100k nodes handleable
-- Query time < 100ms
-- Memory usage stable
-- UI responsive
-
-**Effort:** 5 days
-
-#### Task 3.2.2: Horizontal Scaling
-**Deliverables:**
-- Service decomposition
-- Load balancing
-- Database sharding
-- Cache distribution
-
-**Testing Criteria:**
-- Services scale independently
-- Load distributed evenly
-- Sharding works correctly
-- Cache hit rate > 80%
-
-**Effort:** 5 days
-
-### Sprint 3.3: Security & Compliance (Weeks 31-33)
-
-#### Task 3.3.1: Security Hardening
-**Deliverables:**
-- Penetration testing
-- Vulnerability fixes
-- Encryption implementation
-- Access control system
-
-**Testing Criteria:**
-- No critical vulnerabilities
-- Data encrypted at rest
-- TLS everywhere
-- RBAC working
-
-**Effort:** 5 days
-
-#### Task 3.3.2: Compliance Features
-**Deliverables:**
-- GDPR compliance
-- Audit logging
-- Data retention policies
-- Privacy controls
-
-**Testing Criteria:**
-- Data exportable
-- Deletion complete
-- Audit trail complete
-- Privacy settings work
-
-**Effort:** 3 days
-
-### Sprint 3.4: Production Deployment (Weeks 34-36)
-
-#### Task 3.4.1: CI/CD Pipeline
-**Deliverables:**
-- Automated builds
-- Test automation
-- Deployment scripts
-- Rollback capability
-
-**Testing Criteria:**
-- Builds reproducible
-- Tests run on commit
-- Deploy < 10 minutes
-- Rollback < 2 minutes
-
-**Effort:** 4 days
-
-#### Task 3.4.2: Monitoring & Observability
-**Deliverables:**
-- Metrics dashboard
-- Log aggregation
-- Alerting system
-- Performance monitoring
-
-**Testing Criteria:**
-- Metrics visible
-- Logs searchable
-- Alerts fire correctly
-- Performance tracked
-
-**Effort:** 4 days
-
-## Phase 4: Ecosystem Growth (Months 10-12)
-
-### Sprint 4.1: Mobile Applications (Weeks 37-39)
-
-#### Task 4.1.1: Mobile Development
-**Deliverables:**
-- React Native app
-- iOS build
-- Android build
-- Offline support
-
-**Testing Criteria:**
-- Apps install correctly
-- Core features work
-- Sync when online
-- Performance acceptable
-
-**Effort:** 8 days
-
-### Sprint 4.2: Enterprise Features (Weeks 40-42)
-
-#### Task 4.2.1: Enterprise Tools
-**Deliverables:**
-- SSO integration
-- Advanced permissions
-- Compliance reports
-- SLA monitoring
-
-**Testing Criteria:**
-- SSO works with major providers
-- Permissions granular
-- Reports accurate
-- SLA tracked
-
-**Effort:** 6 days
-
-### Sprint 4.3: Community Building (Weeks 43-45)
-
-#### Task 4.3.1: Community Infrastructure
-**Deliverables:**
-- Forum/Discord setup
-- Documentation site
-- Tutorial videos
-- Sample projects
-
-**Testing Criteria:**
-- Community active
-- Docs comprehensive
-- Tutorials clear
-- Examples runnable
-
-**Effort:** 5 days
-
-### Sprint 4.4: Future Planning (Weeks 46-48)
-
-#### Task 4.4.1: Roadmap 2.0
-**Deliverables:**
-- User feedback analysis
-- Feature prioritization
-- Technical debt assessment
-- Next year planning
-
-**Testing Criteria:**
-- Feedback collected
-- Priorities clear
-- Debt documented
-- Plan approved
-
-**Effort:** 3 days
-
-## Success Metrics
-
-### Technical Metrics
-- **Performance**: 95th percentile response time < 200ms
-- **Availability**: 99.9% uptime
-- **Scalability**: Support 10,000 concurrent users
-- **Quality**: < 1 bug per 1000 lines of code
-
-### User Metrics
-- **Adoption**: 1000 active users by month 6
-- **Retention**: 60% monthly retention
-- **Engagement**: 5 sessions per week average
-- **NPS**: Score > 50
-
-### Business Metrics
-- **Features**: 80% of roadmap delivered on time
-- **Budget**: Within 10% of allocated resources
-- **Quality**: Customer satisfaction > 4.5/5
-- **Growth**: 20% month-over-month user growth
-
-## Risk Mitigation
-
-| Risk | Probability | Impact | Mitigation Strategy |
-|------|-------------|--------|-------------------|
-| Technical complexity | High | High | Incremental development, frequent testing |
-| Scope creep | Medium | High | Strict prioritization, MVP focus |
-| Performance issues | Medium | Medium | Early optimization, load testing |
-| Adoption challenges | Low | High | User feedback loops, iterative design |
-| Security vulnerabilities | Low | High | Security audits, penetration testing |
-
-## Dependencies
-
-### External Dependencies
-- Neo4j database availability
-- Cloud infrastructure (AWS/GCP/Azure)
-- Third-party APIs (OpenAI, etc.)
-- Open source libraries
-
-### Internal Dependencies
-- Team availability
-- Design completion
-- API specifications
-- Testing infrastructure
-
-## Resource Requirements
-
-### Team Composition
-- **Frontend Developers**: 2
-- **Backend Developers**: 2
-- **Full-stack Developer**: 1
-- **DevOps Engineer**: 1
-- **UI/UX Designer**: 1
-- **QA Engineer**: 1
-- **Product Manager**: 1
-- **Technical Writer**: 1 (part-time)
-
-### Infrastructure
-- **Development**: DevContainers, local databases
-- **Staging**: Kubernetes cluster, managed databases
-- **Production**: Multi-region deployment, CDN
-- **Monitoring**: Prometheus, Grafana, Sentry
+| Phase | Status | Progress |
+|-------|--------|----------|
+| Phase 1: Foundation (Months 1-3) | **In Progress** | Sprint 1.1 complete |
+| Phase 2: Enhanced Features (Months 4-6) | Not Started | -- |
+| Phase 3: Production Ready (Months 7-9) | Not Started | -- |
+| Phase 4: Ecosystem Growth (Months 10-12) | Not Started | -- |
 
 ---
 
-**Document Version**: 1.0.0  
-**Last Updated**: 2025-10-12  
-**Review Cycle**: Monthly  
-**Next Review**: 2025-11-12
+## Phase 1: Foundation (Months 1-3)
+
+### Sprint 1.1: Project Setup and Core Infrastructure (Weeks 1-2)
+
+#### 1.1.1 Project Setup
+- [x] Initialize monorepo with pnpm workspaces
+- [x] Configure TypeScript strict mode across all packages
+- [x] Set up ESLint for frontend and backend
+- [x] Create shared types package (@yggdrasil/types)
+- [x] Set up frontend (React 18 + Vite + Tailwind CSS)
+- [x] Set up backend (NestJS with Swagger/OpenAPI)
+- [x] Set up extraction service (Express.js)
+- [x] Set up semantic service (Express.js)
+- [x] Create Chrome extension scaffold (Manifest V3)
+- [x] Document multi-stream development strategy (EXPERIMENTS.md)
+- [x] Track pnpm-lock.yaml for reproducible installs
+
+#### 1.1.2 Security Hardening
+- [x] Add SSRF protection to extraction service (localhost, private networks, IPv6)
+- [x] Block full 127.0.0.0/8 loopback range
+- [x] Validate redirects to prevent SSRF bypass
+- [x] Add XSS prevention in Chrome extension (popup.js, content.js)
+- [x] Fix API client header merge vulnerability
+- [x] Return proper HTTP 404 for missing resources
+- [x] Add query parameter type coercion
+- [x] Fix false success display on failed capture (CaptureReview)
+
+#### 1.1.3 Core UI Shell
+- [x] Create application layout with sidebar navigation
+- [x] Build Dashboard view with stats and recent captures
+- [x] Build Capture form with content type selector
+- [x] Build Graph view placeholder with node sidebar
+- [x] Set up Zustand state management with API integration
+- [x] Implement dark theme
+
+### Sprint 1.2: Graph Engine Foundation (Weeks 3-4)
+
+#### 1.2.1 Database Infrastructure
+- [ ] Set up Neo4j connection and driver
+- [ ] Create graph schema (node types, edge types, constraints)
+- [ ] Implement Neo4j repository layer
+- [ ] Add PostgreSQL for metadata storage
+- [ ] Create database migration system
+- [ ] Set up Redis for caching layer
+- [ ] Write database seed scripts
+
+#### 1.2.2 Graph API
+- [ ] Implement full CRUD for nodes (create, read, update, delete)
+- [ ] Implement full CRUD for edges/relationships
+- [ ] Add graph traversal endpoints (BFS/DFS)
+- [ ] Add node search with filters (type, tags, date range)
+- [ ] Implement pagination for large result sets
+- [ ] Add bulk operations (batch create/delete)
+- [ ] Write API integration tests
+
+#### 1.2.3 Graph Visualization
+- [ ] Integrate Cytoscape.js for 2D graph rendering
+- [ ] Implement force-directed layout
+- [ ] Add node click/hover interactions
+- [ ] Implement pan, zoom, and selection
+- [ ] Add node type visual differentiation (icons, colors)
+- [ ] Connect live data from backend API
+- [ ] Add mini-map for navigation
+
+### Sprint 1.3: Capture Pipeline (Weeks 5-6)
+
+#### 1.3.1 Chrome Extension Enhancement
+- [ ] Add right-click context menu for all capture types
+- [ ] Implement text selection capture
+- [ ] Implement image capture (right-click on images)
+- [ ] Implement link capture (right-click on links)
+- [ ] Add sidebar panel for rich capture without leaving page
+- [ ] Implement quick capture (one-click with AI defaults)
+- [ ] Add capture queue for offline support
+- [ ] Add extension options page (backend URL, preferences)
+
+#### 1.3.2 Extraction Service Enhancement
+- [ ] Add full-page content extraction (main text, images)
+- [ ] Implement structured data extraction (JSON-LD, microdata)
+- [ ] Add screenshot capture (Playwright integration)
+- [ ] Implement YouTube metadata extraction (title, description, thumbnail)
+- [ ] Add Twitter/X content extraction
+- [ ] Implement GitHub repository metadata extraction
+- [ ] Add rate limiting and request queuing
+
+#### 1.3.3 Semantic Service -- Real AI Integration
+- [ ] Integrate OpenAI API for entity extraction
+- [ ] Integrate Ollama for local model fallback
+- [ ] Implement keyword extraction from content
+- [ ] Add topic classification with confidence scores
+- [ ] Implement language detection
+- [ ] Build fallback chain (Cloud -> Local -> Rule-based)
+- [ ] Add embedding generation for semantic similarity
+
+---
+
+## Phase 2: Enhanced Features (Months 4-6)
+
+### Sprint 2.1: Advanced Visualization (Weeks 7-8)
+
+#### 2.1.1 Graph View Enhancements
+- [ ] Add hierarchical layout option
+- [ ] Add circular layout option
+- [ ] Implement node filtering by type, tag, date
+- [ ] Implement edge filtering by relationship type and weight
+- [ ] Add focus mode for subgraph exploration
+- [ ] Implement node grouping/clustering
+- [ ] Add graph search with highlight
+
+#### 2.1.2 Additional View Types
+- [ ] Build Timeline view (chronological captures)
+- [ ] Build Table view (spreadsheet-like with sorting/filtering)
+- [ ] Build Kanban view (board organized by tags/status)
+- [ ] Build Hierarchy view (tree based on taxonomy)
+- [ ] Implement view switcher in UI
+- [ ] Add view persistence (remember last view per session)
+
+#### 2.1.3 3D Graph View
+- [ ] Integrate Three.js / React Three Fiber
+- [ ] Implement 3D force-directed layout
+- [ ] Add 3D navigation (orbit, pan, zoom)
+- [ ] Implement node labels in 3D space
+- [ ] Add 2D/3D toggle in graph view
+- [ ] Optimize rendering for 1000+ nodes
+
+### Sprint 2.2: Semantic Intelligence (Weeks 9-10)
+
+#### 2.2.1 Ontology System
+- [ ] Design ontology data model (classes, properties, instances)
+- [ ] Build ontology editor UI
+- [ ] Implement Dublin Core ontology mapping
+- [ ] Implement Schema.org ontology mapping
+- [ ] Add custom ontology creation
+- [ ] Implement property inheritance through ontology hierarchy
+
+#### 2.2.2 Taxonomy System
+- [ ] Design taxonomy data model (hierarchical categories)
+- [ ] Build taxonomy editor UI (drag-and-drop tree)
+- [ ] Implement auto-classification into taxonomies
+- [ ] Add taxonomy import/export
+- [ ] Support multiple simultaneous taxonomies
+- [ ] Implement taxonomy-based navigation
+
+#### 2.2.3 Relationship Inference
+- [ ] Implement semantic similarity calculation (embeddings)
+- [ ] Build relationship suggestion engine
+- [ ] Add "similar nodes" panel in node detail view
+- [ ] Implement automatic relationship creation (with confidence threshold)
+- [ ] Add relationship type inference
+- [ ] Build knowledge gap detection
+
+### Sprint 2.3: Search and Discovery (Weeks 11-12)
+
+#### 2.3.1 Full-Text Search
+- [ ] Set up Elasticsearch or MeiliSearch
+- [ ] Index all node content
+- [ ] Implement search results UI with highlighting
+- [ ] Add faceted search (filter by type, tags, date, source)
+- [ ] Implement search suggestions / autocomplete
+- [ ] Add saved searches
+
+#### 2.3.2 Semantic Search
+- [ ] Set up ChromaDB for vector storage
+- [ ] Generate embeddings for all nodes
+- [ ] Implement "find similar" feature
+- [ ] Add natural language query support
+- [ ] Implement search-by-example (select a node, find similar)
+
+#### 2.3.3 Command Palette
+- [ ] Build Cmd+K command palette component
+- [ ] Add universal search integration
+- [ ] Implement quick actions (create node, navigate, filter)
+- [ ] Add keyboard shortcuts system
+- [ ] Implement customizable shortcuts
+
+---
+
+## Phase 3: Production Ready (Months 7-9)
+
+### Sprint 3.1: Data Persistence and Reliability (Weeks 13-14)
+
+#### 3.1.1 Database Hardening
+- [ ] Implement database connection pooling
+- [ ] Add automatic retry with backoff
+- [ ] Create backup/restore system
+- [ ] Implement data migration tooling
+- [ ] Add database health monitoring
+- [ ] Set up automatic backups schedule
+
+#### 3.1.2 Error Handling and Resilience
+- [ ] Implement circuit breaker for external services
+- [ ] Add graceful degradation for all AI features
+- [ ] Implement request retry with exponential backoff
+- [ ] Add comprehensive error logging
+- [ ] Build error recovery UI (retry failed operations)
+- [ ] Implement offline mode for Chrome extension
+
+#### 3.1.3 Performance Optimization
+- [ ] Add query result caching (Redis)
+- [ ] Implement graph virtualization for large graphs
+- [ ] Add lazy loading for node properties
+- [ ] Optimize bundle size (code splitting, tree shaking)
+- [ ] Add loading states and skeleton screens
+- [ ] Implement request deduplication
+
+### Sprint 3.2: Import/Export and Portability (Weeks 15-16)
+
+#### 3.2.1 Export System
+- [ ] Export to JSON (full graph with metadata)
+- [ ] Export to CSV (nodes and relationships separately)
+- [ ] Export to Markdown (knowledge base format)
+- [ ] Export to JSON-LD / RDF (semantic web format)
+- [ ] Add selective export (filtered subsets)
+- [ ] Implement scheduled auto-export
+
+#### 3.2.2 Import System
+- [ ] Import from browser bookmarks (Chrome, Firefox)
+- [ ] Import from Obsidian (markdown + links)
+- [ ] Import from Notion (API integration)
+- [ ] Import from Roam Research (JSON export)
+- [ ] Import from OPML (RSS/feed lists)
+- [ ] Add duplicate detection during import
+
+### Sprint 3.3: Plugin System Foundation (Weeks 17-18)
+
+#### 3.3.1 Plugin Architecture
+- [ ] Design plugin API and extension points
+- [ ] Implement plugin loader and lifecycle management
+- [ ] Add plugin configuration system
+- [ ] Implement plugin sandboxing
+- [ ] Build plugin development documentation
+- [ ] Create plugin template/starter kit
+
+#### 3.3.2 Built-in Plugins
+- [ ] YouTube extractor plugin (videos, playlists, transcripts)
+- [ ] Twitter/X extractor plugin (threads, profiles)
+- [ ] GitHub extractor plugin (repos, issues, code)
+- [ ] Academic paper extractor (arXiv, Semantic Scholar)
+- [ ] Reddit extractor plugin (posts, comments)
+- [ ] Generic CSS/XPath extractor plugin
+
+---
+
+## Phase 4: Ecosystem Growth (Months 10-12)
+
+### Sprint 4.1: Custom Views System (Weeks 19-20)
+
+#### 4.1.1 View Configuration Engine
+- [ ] Design view configuration schema
+- [ ] Implement view builder UI
+- [ ] Add filter, sort, and group configuration
+- [ ] Implement saved views with shareable URLs
+- [ ] Add view templates for common patterns
+- [ ] Support plugin-based custom view renderers
+
+#### 4.1.2 Dashboard Customization
+- [ ] Add customizable dashboard widgets
+- [ ] Implement drag-and-drop widget arrangement
+- [ ] Build tag cloud widget
+- [ ] Build activity feed widget
+- [ ] Build stats/metrics widgets
+- [ ] Add widget configuration panels
+
+### Sprint 4.2: Collaboration Features (Weeks 21-22)
+
+#### 4.2.1 Multi-User Support
+- [ ] Implement user authentication (OAuth2)
+- [ ] Add role-based access control
+- [ ] Implement graph sharing (read/write permissions)
+- [ ] Add collaborative editing
+- [ ] Implement user activity tracking
+- [ ] Add commenting on nodes
+
+### Sprint 4.3: Mobile and Cross-Platform (Weeks 23-24)
+
+#### 4.3.1 Responsive Design
+- [ ] Optimize all views for tablet
+- [ ] Optimize all views for mobile
+- [ ] Add touch-friendly graph interactions
+- [ ] Implement mobile capture flow
+- [ ] Add PWA support (offline, installable)
+- [ ] Test on major mobile browsers
+
+### Sprint 4.4: Polish and Documentation (Weeks 23-24)
+
+#### 4.4.1 Documentation
+- [ ] Write user guide
+- [ ] Write plugin development guide
+- [ ] Write API reference documentation
+- [ ] Create video tutorials
+- [ ] Write deployment guide (self-hosting)
+- [ ] Create contribution guidelines
+
+#### 4.4.2 Testing and Quality
+- [ ] Achieve 80%+ unit test coverage
+- [ ] Write end-to-end tests (Playwright)
+- [ ] Perform security audit
+- [ ] Conduct performance benchmarking
+- [ ] Run accessibility audit (WCAG 2.1 AA)
+- [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
+
+---
+
+## Quick Reference: Documentation Index
+
+| Document | Description | Location |
+|----------|-------------|----------|
+| **PRD** | Full product requirements, features, tech stack | [docs/PRD.md](./PRD.md) |
+| **Roadmap** | This file -- phased task tracking | [docs/ROADMAP.md](./ROADMAP.md) |
+| **Architecture** | System design, data models, tech decisions | [docs/ARCHITECTURE.md](./ARCHITECTURE.md) |
+| **Development** | Setup guide, build commands, testing | [docs/DEVELOPMENT.md](./DEVELOPMENT.md) |
+| **Experiments** | Multi-stream dev strategy, branch conventions | [docs/EXPERIMENTS.md](./EXPERIMENTS.md) |
+
+## Resource Requirements
+
+### Development Team
+- 1 Full-stack developer (primary)
+- AI assistant (Devin) for implementation support
+- Design input as needed
+
+### Infrastructure (MVP)
+- Node.js 20+ runtime
+- Neo4j Community Edition (or in-memory for development)
+- PostgreSQL 15+
+- Redis 7+
+- Optional: Ollama for local AI models
+
+### External Services
+- OpenAI API key (for cloud AI features)
+- Chrome Web Store developer account (for extension publishing)
+
+---
+
+**Document Version**: 2.0.0
+**Last Updated**: 2026-03-12
+**Status**: Active
+**Author**: @tmdcpro
